@@ -1,18 +1,30 @@
 {
   "name": "dipintosulpancione",
-  "version": "0.0.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "Simple authentication system",
+  "main": "app.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "Brad Traversy",
+  "license": "ISC",
   "dependencies": {
-    "body-parser": "~1.16.0",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.0",
-    "express": "~4.14.1",
-    "morgan": "~1.7.0",
-    "pug": "~2.0.0-beta10",
-    "serve-favicon": "~2.3.2"
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "connect-flash": "*",
+    "cookie-parser": "^1.4.1",
+    "express": "*",
+    "express-handlebars": "*",
+    "express-messages": "*",
+    "express-session": "*",
+    "mongoose-float": "*",
+    "express-validator": "^2.16.0",
+    "mongodb": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-http": "*",
+    "passport-local": "*"
   },
   "devDependencies": {
     "flightplan": "^0.6.15",

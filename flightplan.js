@@ -2,7 +2,7 @@ var plan = require('flightplan');
 
 var appName = 'dipintosulpancione';
 var username = 'deploy';
-var startFile = 'bin/www';
+var startFile = 'app.js';
 
 var tmpDir = appName+'-' + new Date().getTime();
 
