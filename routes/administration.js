@@ -1,58 +1,59 @@
 var express = require('express');
 var router = express.Router();
 var LocalStrategy = require('passport-local').Strategy;
+var cloudinary = require('cloudinary');
+var multiparty = require('multiparty');
 
-var User = require('../models/user');
-var Product = require('../models/product');
 
-router.get('/products', function(req, res){
-	Product.find({}, function(err, products) {
-    res.render('products',{products:products});
+cloudinary.config({
+  cloud_name: 'deduvaibr',
+  api_key: '785991179584576',
+  api_secret: 'fCr809fV4b7NL0hpx4QlDlEmlKA'
+});
+
+
+router.get('/photos', ensureAuthenticated, function(req, res){
+
+  cloudinary.api.resources(function(result){
+    console.log(result);
+  },
+    { type: 'upload', prefix: 'dipintosulpancione/pancione' });
+
+	res.render('administration/photos', {title:"Gestione foto"});
+
+});
+
+router.get('/news', ensureAuthenticated, function(req, res){
+	res.render('administration/news', {title:"Gestione news"})
+});
+
+
+router.post('/photos', ensureAuthenticated, function(req, res){
+  var form = new multiparty.Form();
+  form.parse(req, function(err, fields, files) {
+    console.log(fields.folder[0]);
+
+    cloudinary.uploader.upload(files.foto[0].path, function(error,result) {
+       if(!error){
+         console.log(result)
+       }else{
+         console.log(error)
+       }
+    },
+     { public_id: `dipintosulpancione/${fields.folder[0]}/${files.foto[0].originalFilename.replace('.jpg', '')}`}
+   );
   });
 });
 
-// Create Product
-router.post('/products', function(req, res){
-	var name = req.body.name;
-	var price = parseFloat(req.body.price);
-	var quantity = req.body.quantity;
-	var category = req.body.category;
-	var market = req.body.market;
-	var img_link = req.body.img_link;
 
-	// Validation
-	req.checkBody('name', 'Name is required').notEmpty();
-	req.checkBody('price', 'Price is required').notEmpty();
-	req.checkBody('quantity', 'Quantity is required').notEmpty();
-	req.checkBody('category', 'Category is required').notEmpty();
-	req.checkBody('market', 'Market is required').notEmpty();
-
-	var errors = req.validationErrors();
-
-	if(errors){
-		res.render('products',{
-			errors:errors
-		});
+function ensureAuthenticated(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
 	} else {
-		var newProduct = new Product({
-			name: name,
-			price:price,
-			quantity: quantity,
-			category: category,
-			market:market,
-			img_link:img_link
-		});
-
-		Product.createProduct(newProduct, function(err, product){
-			if(err) throw err;
-			console.log(product);
-		});
-
-		req.flash('success_msg', 'Product succesfully created');
-
-		res.redirect('/administration/products');
+		//req.flash('error_msg','You are not logged in');
+		res.redirect('/users/login');
 	}
-});
+}
 
 
 module.exports = router;

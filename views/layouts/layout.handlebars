@@ -11,16 +11,17 @@
         <nav>
           <ul class="nav nav-pills pull-right">
             {{#if user}}
-              <li role="presentation"><a href="/">Dashboard</a></li>
-              <li role="presentation"><a href="/users/logout">Logout</a></li>
-							<li role="presentation"><a href="/administration/products">Products Database</a></li>
+              <li role="presentation"><a href="/">Home</a></li>
+							<li role="presentation"><a href="/administration/photos">Gestione foto</a></li>
+							<li role="presentation"><a href="/administration/news">Gestione news</a></li>
+							<li role="presentation"><a href="/users/logout">Uscita</a></li>
+
             {{else}}
               <li role="presentation"><a href="/users/login">Login</a></li>
-              <li role="presentation"><a href="/users/register">Register</a></li>
             {{/if}}
           </ul>
         </nav>
-        <h3 class="text-muted">Home Administration</h3>
+        <h3 class="text-muted">www.dipintosulpancione.it</h3>
       </div>
 
 
@@ -49,5 +50,11 @@
       </footer>
 
     </div> <!-- /container -->
+
+		<!-- Bootstrap core JavaScript
+		    ================================================== -->
+			<!-- Placed at the end of the document so the pages load faster -->
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+			<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>
