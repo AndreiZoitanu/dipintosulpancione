@@ -11,13 +11,29 @@ cloudinary.config({
   api_secret: 'fCr809fV4b7NL0hpx4QlDlEmlKA'
 });
 
-
-router.get('/photos', ensureAuthenticated, function(req, res){
+router.get('/photos/pancione', ensureAuthenticated, function(req, res){
 
   cloudinary.api.resources(function(result){
-    console.log(result);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(result);
   },
     { type: 'upload', prefix: 'dipintosulpancione/pancione' });
+
+});
+
+router.get('/photos/pancione', ensureAuthenticated, function(req, res){
+
+  cloudinary.api.resources(function(result){
+    res.setHeader('Content-Type', 'application/json');
+    res.send(result);
+  },
+    { type: 'upload', prefix: 'dipintosulpancione/pancione' });
+
+});
+
+
+
+router.get('/photos', ensureAuthenticated, function(req, res){
 
 	res.render('administration/photos', {title:"Gestione foto"});
 
@@ -31,13 +47,13 @@ router.get('/news', ensureAuthenticated, function(req, res){
 router.post('/photos', ensureAuthenticated, function(req, res){
   var form = new multiparty.Form();
   form.parse(req, function(err, fields, files) {
-    console.log(fields.folder[0]);
-
     cloudinary.uploader.upload(files.foto[0].path, function(error,result) {
-       if(!error){
-         console.log(result)
+       if(!error.error){
+         res.render('administration/photos',{loadingFinish:true});
        }else{
-         console.log(error)
+         res.render('administration/photos',{
+     			error:error.error.message
+     		});
        }
     },
      { public_id: `dipintosulpancione/${fields.folder[0]}/${files.foto[0].originalFilename.replace('.jpg', '')}`}

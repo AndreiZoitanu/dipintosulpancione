@@ -19,9 +19,11 @@ var db = mongoose.connection;
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var administration = require('./routes/administration');
+var images = require('./routes/images');
 
 // Init App
 var app = express();
+
 
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
@@ -82,6 +84,7 @@ app.use(function (req, res, next) {
 app.use('/', routes);
 app.use('/users', users);
 app.use('/administration', administration);
+app.use('/images', images);
 
 // Set Port
 app.set('port', (process.env.PORT || 8080));
