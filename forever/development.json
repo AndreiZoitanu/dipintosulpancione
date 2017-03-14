@@ -1,0 +1,7 @@
+{
+  "uid":"dipintosulpancione",
+  "append":true,
+  "watch":true,
+  "script":"app.js",
+  "sourceDir":"/home/deploy/dipintosulpancione"
+}

@@ -48,10 +48,11 @@ plan.remote(function(remote) {
   remote.rm('-rf /tmp/' + tmpDir);
 
   remote.log('Install dependencies');
+  remote.sudo('ln -snf ~/' + tmpDir + ' ~/'+appName, {user: username});
   remote.sudo('npm --production --prefix ~/' + tmpDir + ' install ~/' + tmpDir, {user: username});
 
   remote.log('Reload application');
   remote.sudo('ln -snf ~/' + tmpDir + ' ~/'+appName, {user: username});
   remote.exec('forever stop ~/'+appName+'/'+startFile, {failsafe: true});
-  remote.exec('forever start ~/'+appName+'/'+startFile);
+  remote.exec('forever start ~/'+appName+'/forever/development.json');
 });
