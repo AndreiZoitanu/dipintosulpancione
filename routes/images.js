@@ -11,6 +11,8 @@ cloudinary.config({
 router.get('/pancione', function(req, res){
 
   cloudinary.api.resources(function(result){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.setHeader('Content-Type', 'application/json');
     res.send(result);
   },
@@ -21,6 +23,8 @@ router.get('/pancione', function(req, res){
 router.get('/trucco', function(req, res){
 
   cloudinary.api.resources(function(result){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.setHeader('Content-Type', 'application/json');
     res.send(result);
   },
@@ -31,6 +35,8 @@ router.get('/trucco', function(req, res){
 router.get('/feste', function(req, res){
 
   cloudinary.api.resources(function(result){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.setHeader('Content-Type', 'application/json');
     res.send(result);
   },
@@ -41,6 +47,8 @@ router.get('/feste', function(req, res){
 router.get('/quadri', function(req, res){
 
   cloudinary.api.resources(function(result){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.setHeader('Content-Type', 'application/json');
     res.send(result);
   },

@@ -15,7 +15,6 @@
     "cloudinary": "^1.8.0",
     "connect-flash": "*",
     "cookie-parser": "^1.4.1",
-    "cors": "^2.8.1",
     "express": "*",
     "express-handlebars": "*",
     "express-messages": "*",

@@ -1,5 +1,4 @@
 var express = require('express');
-var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -11,8 +10,6 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-
-app.use(cors({origin: 'http://89.46.104.211'}));
 
 
 mongoose.connect('mongodb://104.236.43.92/loginapp');
