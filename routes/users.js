@@ -7,11 +7,7 @@ var User = require('../models/user');
 
 // Register
 router.get('/register', function(req, res){
-	if(req.isAuthenticated()){
 		res.render('register');
-	}else{
-		res.render('login');
-	}
 });
 
 // Login
