@@ -12,7 +12,6 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
 
-
 mongoose.connect('mongodb://104.236.43.92/loginapp');
 var db = mongoose.connection;
 
