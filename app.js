@@ -12,13 +12,15 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
 
-mongoose.connect('mongodb://104.236.43.92/loginapp');
+
+mongoose.connect('mongodb://localhost/loginapp');
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var administration = require('./routes/administration');
 var images = require('./routes/images');
+var documenti = require('./routes/documenti');
 
 // Init App
 var app = express();
@@ -84,6 +86,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/administration', administration);
 app.use('/images', images);
+app.use('/documenti', documenti);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));

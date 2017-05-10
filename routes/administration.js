@@ -40,7 +40,11 @@ router.get('/photos', ensureAuthenticated, function(req, res){
 });
 
 router.get('/news', ensureAuthenticated, function(req, res){
-	res.render('administration/news', {title:"Gestione news"})
+	res.render('administration/news', {title:"La nostra pazza vita insieme"})
+});
+
+router.get('/gestione-spese', ensureAuthenticated, function(req, res){
+	res.render('administration/gestione-spese', {title:"Gestione spese"})
 });
 
 

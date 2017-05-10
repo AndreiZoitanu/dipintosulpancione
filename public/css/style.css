@@ -1,7 +1,12 @@
+body,html{
+  height: 100%;
+  width: 100%;
+}
 /* Space out content a bit */
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+  background-color: f0eeee;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -25,10 +30,13 @@ body {
 }
 
 /* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+
+
+.footer p{
+  margin: 0 auto;
+  line-height: 50px;
+  width: 250px;
+  color: white;
 }
 
 /* Customize container */
@@ -82,9 +90,7 @@ body {
   margin-top:0;
 }
 
-footer{
-  margin-top:40px;
-}
+
 
 .tab-pane{
   margin-top: 20px;
@@ -95,3 +101,9 @@ footer{
       max-width: 1170px;
   }
 }
+
+/*MAIN CONTAINER STYLE START*/
+.main-container{
+  margin-top: 60px;
+}
+/*MAIN CONTAINER STYLE END*/
