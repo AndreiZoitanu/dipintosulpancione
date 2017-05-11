@@ -12,6 +12,7 @@
   "dependencies": {
     "bcryptjs": "*",
     "body-parser": "*",
+    "busboy-body-parser": "^0.2.0",
     "cloudinary": "^1.8.0",
     "connect-flash": "*",
     "cookie-parser": "^1.4.1",
@@ -20,6 +21,7 @@
     "express-messages": "*",
     "express-session": "*",
     "express-validator": "^2.16.0",
+    "gridfs-stream": "^1.1.1",
     "mongodb": "*",
     "mongoose": "*",
     "mongoose-float": "*",
@@ -27,7 +29,9 @@
     "node-dropbox": "^0.1.8",
     "passport": "*",
     "passport-http": "*",
+    "morgan": "^1.7.0",
     "passport-local": "*"
+
   },
   "devDependencies": {
     "flightplan": "^0.6.15",
