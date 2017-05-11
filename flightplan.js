@@ -2,6 +2,7 @@ var plan = require('flightplan');
 
 var appName = 'dipintosulpancione';
 var username = 'deploy';
+var password = "slishy1207"
 var startFile = 'app.js';
 
 var tmpDir = appName+'-' + new Date().getTime();
@@ -19,6 +20,7 @@ plan.target('production', [
   {
     host: '104.236.43.92',
     username: username,
+    password: password,
     agent: process.env.SSH_AUTH_SOCK
   },
 //add in another server if you have more than one
