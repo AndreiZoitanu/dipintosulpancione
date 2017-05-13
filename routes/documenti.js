@@ -1,88 +1,84 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
-const fs = require("fs");
-var Grid = require("gridfs-stream");
-var db = mongoose.connection;
+var multiparty = require('multiparty');
+var fs = require('fs')
+var s3 = require('s3');
+var AWS = require('aws-sdk');
 
-Grid.mongo = mongoose.mongo;
-let gfs;
+AWS.config.update({
+    accessKeyId: "AKIAI5L3Q6XPQFC4L6BQ",
+    secretAccessKey: "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",
+    signatureVersion: 'v4'
+  });
 
-db.once("open", () => {
-    gfs = Grid(db.db);
-
-
-		router.get('/bollette-pagate', ensureAuthenticated, function(req, res){
-			res.render('documenti/bollette-pagate');
-		});
-
-		router.get('/bollette-da-pagare', ensureAuthenticated, function(req, res){
-			res.render('documenti/bollette-da-pagare');
-		});
-
-		router.get('/fotocopie', ensureAuthenticated, function(req, res){
-			res.render('documenti/fotocopie');
-		});
-
-		router.get('/altro', ensureAuthenticated, function(req, res){
-			res.render('documenti/altro');
-		});
+// Create an S3 client
+var awsS3Client = new AWS.S3();
+var options = {
+  s3Client: awsS3Client,
+};
+var client = s3.createClient(options);
 
 
-    router.get('/hello', (req, res) => {
-      res.send('Hello Housem !');
-    });
-    router.get('/img/:imgname', (req, res) => {
-        gfs.files.find({
-            filename: req.params.imgname
-        }).toArray((err, files) => {
+router.get('/bollette-pagate', ensureAuthenticated, function(req, res){
+  awsS3Client.listObjects({Bucket: 'gestionecasa'}, function(err,data) {
+    if (err)
+      console.log(err);
+    else{
+      data.Contents.forEach(function(element){
+        console.log(element.Key);
+      });
+    res.render('documenti/bollette-pagate');
+    }
+  })
+});
 
-            if (files.length === 0) {
-                return res.status(400).send({
-                    message: 'File not found'
-                });
-            }
-            let data = [];
-            let readstream = gfs.createReadStream({
-                filename: files[0].filename
-            });
+router.get('/bollette-da-pagare', ensureAuthenticated, function(req, res){
+  res.render('documenti/bollette-da-pagare');
+});
 
-            readstream.on('data', (chunk) => {
-                data.push(chunk);
-            });
+router.get('/fotocopie', ensureAuthenticated, function(req, res){
+  res.render('documenti/fotocopie');
+});
 
-            readstream.on('end', () => {
-                data = Buffer.concat(data);
-                let img = 'data:image/png;base64,' + Buffer(data).toString('base64');
-                res.end(img);
-            });
+router.get('/altro', ensureAuthenticated, function(req, res){
+  res.render('documenti/altro');
+});
 
-            readstream.on('error', (err) => {
-                console.log('An error occurred!', err);
-                throw err;
-            });
-        });
-    });
-    router.post('/img', (req, res) => {
-        let part = req.files.file;
-        let writeStream = gfs.createWriteStream({
-            filename: 'img_' + part.name,
-            mode: 'w',
-            content_type: part.mimetype
-        });
 
-        writeStream.on('close', (file) => {
-            return res.status(200).send({
-                message: 'Success',
-                file: file
-            });
-        });
+function getFiles(bucket){
+  awsS3Client.listObjects({Bucket: bucket}, function(err,data) {
+    if (err)
+      console.log(err);
+    else{
+      return data;
+    }
+  })
+}
 
-        writeStream.write(part.data);
 
-        writeStream.end();
-    });
-})
+function uploadFile(localFile, bucket, key){
+
+  var params = {
+   localFile: localFile,
+   s3Params: {
+     Bucket: bucket,
+     Key: key
+   },
+  };
+
+  var uploader = client.uploadFile(params);
+  uploader.on('error', function(err) {
+    console.error("unable to upload:", err.stack);
+  });
+  uploader.on('progress', function() {
+    console.log("progress", uploader.progressMd5Amount,
+              uploader.progressAmount, uploader.progressTotal);
+  });
+  uploader.on('end', function() {
+    console.log("done uploading");
+  });
+}
+
 
 
 function ensureAuthenticated(req, res, next){
