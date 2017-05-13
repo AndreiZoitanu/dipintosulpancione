@@ -13,7 +13,7 @@ var mongoose = require('mongoose');
 
 
 
-mongoose.connect('mongodb://localhost/loginapp');
+mongoose.connect('mongodb://104.236.43.92/loginapp');
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
