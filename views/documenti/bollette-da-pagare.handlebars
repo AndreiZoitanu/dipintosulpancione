@@ -1,1 +1,21 @@
  <h2 class="page-header">Bollette da pagare</h2>
+
+ {{#each files}}
+  <a href="/documenti/get_aws_file/{{this}}?">{{this}}</a><br>
+
+ {{/each}}
+
+ <h2>Inserire nuovi documenti</h2>
+ <hr>
+ <form method="post" action="/documenti/aws_upload" enctype="multipart/form-data">
+   <div class="form-group">
+     <label>Scegli immagine</label>
+     <input type="file" class="form-control" name="file" placeholder="Foto" multiple="multiple">
+   </div>
+   <div class="form-group">
+     <label>Inserisci nome</label>
+     <input type="text" class="form-control" name="name" placeholder="Nome file">
+   </div>
+   <input type="text" name="folder" value="bollette_pagate" hidden>
+   <button type="submit" class="btn btn-default">Invia</button>
+ </form>
